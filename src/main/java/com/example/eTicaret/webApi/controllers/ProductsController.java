@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.eTicaret.business.abstracts.ProductService;
-import com.example.eTicaret.entities.concretes.Product;
+import com.example.eTicaret.business.requests.CreateProductRequest;
+import com.example.eTicaret.business.response.GetAllProductResponse;
 
 @RestController
 @RequestMapping("/api/products")
@@ -21,10 +23,14 @@ public class ProductsController {
 	}
 	
 	@GetMapping("/getAll")
-	public List<Product> getAll(){	
+	public List<GetAllProductResponse> getAll(){	
 		return productService.getAll();
+	}	
+	@PostMapping ("/add")
+	public void add(CreateProductRequest createProductRequest) {
+		this.productService.add(createProductRequest);
 		
-		
+	
 		
 	}
 

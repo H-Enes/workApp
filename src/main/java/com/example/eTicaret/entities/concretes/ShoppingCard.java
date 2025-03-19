@@ -10,26 +10,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="products")
+@Table(name="shopping_cart")
 @Entity
-public class Product {
-	
+public class ShoppingCard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
 	
-	@Column(name="name")
-	private String name;
+	@Column(name="user_id")
+	private int user_id;
 	
-	@Column(name = "category_id")
-	private int category_id;
-	
-	
-
+	@Column(name = "product_id")
+	private int product_id;
 	
 	
 }

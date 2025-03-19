@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="products")
+@Table(name= "category")
 @Entity
-public class Product {
+public class Category {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +24,5 @@ public class Product {
 	
 	@Column(name="name")
 	private String name;
-	
-	@Column(name = "category_id")
-	private int category_id;
-	
-	
 
-	
-	
 }
