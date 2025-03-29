@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateProductRequest {
 	private String name;
-	private int category_id;
+	private int stock_quantity;
 }

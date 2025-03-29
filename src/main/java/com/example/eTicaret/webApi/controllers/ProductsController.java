@@ -2,7 +2,6 @@ package com.example.eTicaret.webApi.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,7 @@ import com.example.eTicaret.business.response.GetAllProductResponse;
 public class ProductsController {
 	private ProductService productService;
 
-	@Autowired
+	//@Autowired kullanmaya gerek yok constructor ile dependency injection
 	public ProductsController(ProductService productService) {
 		this.productService = productService;
 	}

@@ -13,20 +13,20 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="products")
+@Table(name="products")  // tablo ismi ile entity sınıfının ismi farklıysa @Table anatasyonu kullanılması gerek
 @Entity
 public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
+	//@Column(name="id") sütun ismi ve değişken ismi aynı ise anatasyonu kullanmaya gerek yok
 	private int id;
 	
-	@Column(name="name")
+	//@Column(name="name")
 	private String name;
 	
-	@Column(name = "category_id")
-	private int category_id;
+	//@Column(name = "stock_quantity")
+	private int stock_quantity;
 	
 	
 
