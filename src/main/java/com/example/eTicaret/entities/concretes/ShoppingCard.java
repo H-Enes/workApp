@@ -28,5 +28,8 @@ public class ShoppingCard {
 	@Column(name = "product_id")
 	private int product_id;
 	
+	@Column(name = "product_count")
+	private int product_count;
+	
 	
 }

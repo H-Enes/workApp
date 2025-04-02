@@ -11,5 +11,6 @@ public class CreateShoppingCardRequest {
 	
 	private int user_id;
 	private int product_id;
+	private int product_count;
 
 }

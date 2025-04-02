@@ -3,7 +3,9 @@ package com.example.eTicaret.webApi.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,4 +36,9 @@ public class ShoppingCartsController {
 	public void add(CreateShoppingCardRequest createShoppingCartRequest) {
 		this.shoppingCartService.add(createShoppingCartRequest);
 	}
+	@DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable int id) {
+        shoppingCartService.deleteShoppingCart(id);
+        return "Ürün başarıyla silindi!";
+    }
 }

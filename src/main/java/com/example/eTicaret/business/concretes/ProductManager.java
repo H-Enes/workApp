@@ -2,7 +2,6 @@ package com.example.eTicaret.business.concretes;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.eTicaret.business.abstracts.ProductService;
@@ -13,6 +12,7 @@ import com.example.eTicaret.dataAccess.abstracts.ProductRepository;
 import com.example.eTicaret.entities.concretes.Product;
 
 import lombok.RequiredArgsConstructor;
+
 
 /*
  * @Service public class ProductManager implements ProductService {
@@ -84,6 +84,42 @@ public class ProductManager implements ProductService {
 		this.productRepository.save(product);
 		
 	}
+	
+	
+
+
+	public void decreaseStock(int productId, int count) {
+		System.out.println("Stok azaltma işlemi başlıyor, Product ID: " + productId);
+	    Product product = productRepository.findById(productId)
+	            .orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
+
+	    if (product.getStock_quantity() > 0) {
+	        product.setStock_quantity(product.getStock_quantity() - count);
+	        this.productRepository.save(product);
+	    } else {
+	        throw new RuntimeException("Stok yetersiz!");
+	    }
+	}
+	
+	public void increasingStock(int productId, int count) {
+		System.out.println("Stok artırma işlemi başlıyor, Product ID: " + productId);
+	    Product product = productRepository.findById(productId)
+	            .orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
+
+	        product.setStock_quantity(product.getStock_quantity() + count);
+	        this.productRepository.save(product);    
+	}
+	
+	
+	public void deleteProduct(int productId) {
+        if (productRepository.existsById(productId)) {
+            productRepository.deleteById(productId);
+        } else {
+            throw new RuntimeException("Ürün bulunamadı!");
+        }
+    }
+
+
 }
 
 

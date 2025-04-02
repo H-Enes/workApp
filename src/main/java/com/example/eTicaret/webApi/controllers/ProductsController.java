@@ -2,7 +2,9 @@ package com.example.eTicaret.webApi.controllers;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +30,13 @@ public class ProductsController {
 	@PostMapping ("/add")
 	public void add(CreateProductRequest createProductRequest) {
 		this.productService.add(createProductRequest);
+	}	
+		@DeleteMapping("/{id}")
+	    public String deleteProduct(@PathVariable int id) {
+	        productService.deleteProduct(id);
+	        return "Ürün başarıyla silindi!";
+	    }
 		
 	
-		
-	}
 
 }

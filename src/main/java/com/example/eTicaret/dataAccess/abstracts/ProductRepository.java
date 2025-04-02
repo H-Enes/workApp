@@ -15,4 +15,6 @@ import com.example.eTicaret.entities.concretes.Product;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findAll();
+    
+    
 }

@@ -8,4 +8,5 @@ import com.example.eTicaret.business.response.GetAllShoppingCardResponse;
 public interface ShoppingCartService {
 	List<GetAllShoppingCardResponse> getAll();
 	void add(CreateShoppingCardRequest createShoppingCardRequest);
+	void deleteShoppingCart(int shoppingCartId);
 }

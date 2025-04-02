@@ -9,5 +9,6 @@ public interface ProductService {
 	
 	List<GetAllProductResponse> getAll();
 	void add(CreateProductRequest createProductRequest);
+	void deleteProduct(int id);
 
 }

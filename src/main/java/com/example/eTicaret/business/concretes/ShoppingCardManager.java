@@ -16,10 +16,12 @@ import com.example.eTicaret.entities.concretes.ShoppingCard;
 public class ShoppingCardManager implements ShoppingCartService {
 
 	private ShoppingCardRepository shoppingCardRepository;
+	private ProductManager productManager;
 	
 	@Autowired
-	public ShoppingCardManager(ShoppingCardRepository shoppingCardRepository) {
+	public ShoppingCardManager(ShoppingCardRepository shoppingCardRepository, ProductManager productManager) {
 		this.shoppingCardRepository = shoppingCardRepository;
+		this.productManager = productManager; 
 	}
 	
 	@Override
@@ -33,6 +35,7 @@ public class ShoppingCardManager implements ShoppingCartService {
 			shoppingCardItem.setId(shoppingCart.getId());
 			shoppingCardItem.setUser_id(shoppingCart.getUser_id());
 			shoppingCardItem.setProduct_id(shoppingCart.getProduct_id());
+			shoppingCardItem.setProduct_count(shoppingCart.getProduct_count());
 			
 			ShoppingCardResponse.add(shoppingCardItem);
 		
@@ -48,9 +51,35 @@ public class ShoppingCardManager implements ShoppingCartService {
 		
 		shoppingCard.setProduct_id(createShoppingCardRequest.getProduct_id());
 		shoppingCard.setUser_id(createShoppingCardRequest.getUser_id());
+		shoppingCard.setProduct_count(createShoppingCardRequest.getProduct_count());
 		
 		this.shoppingCardRepository.save(shoppingCard);
 		
+		// Stok azaltma işlemi ProductManager üzerinden çağrılmalı
+	    productManager.decreaseStock(createShoppingCardRequest.getProduct_id(), createShoppingCardRequest.getProduct_count());
+		
 	}
+	
+	@Override
+	public void deleteShoppingCart(int shoppingCartId) {
+	    if (shoppingCardRepository.existsById(shoppingCartId)) {
+	        // Önce sepetten ilgili ürünü bul
+	        ShoppingCard shoppingCard = shoppingCardRepository.findById(shoppingCartId)
+	                .orElseThrow(() -> new RuntimeException("Sepette ürün bulunamadı!"));
+
+	        int productId = shoppingCard.getProduct_id();
+	        int count = shoppingCard.getProduct_count();
+
+	        // Sepetten ürünü sil
+	        shoppingCardRepository.deleteById(shoppingCartId);
+
+	        // Stok artırma işlemi
+	        productManager.increasingStock(productId, count);
+	    } else {
+	        throw new RuntimeException("Sepette ürün bulunamadı!");
+	    }
+	}
+
+
 
 }
