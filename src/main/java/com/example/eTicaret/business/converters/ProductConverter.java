@@ -12,7 +12,8 @@ public class ProductConverter {
 	        return new GetAllProductResponse(
 	                product.getId(),
 	                product.getName(),
-	                product.getStock_quantity()
+	                product.getStock_quantity(),
+	                product.getPrice()       
 	        );
 	    }
 

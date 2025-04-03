@@ -119,6 +119,16 @@ public class ProductManager implements ProductService {
         }
     }
 
+	@Override
+	public void updatePrice(int id, double price) {
+		Product product = productRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
+		product.setPrice(price);
+		productRepository.save(product);
+		
+		
+	}
+
 
 }
 

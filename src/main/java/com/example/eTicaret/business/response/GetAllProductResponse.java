@@ -23,4 +23,5 @@ public class GetAllProductResponse {
     private int id;
     private String name;
     private int stock_quantity;
+    private double price;
 }

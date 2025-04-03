@@ -27,22 +27,26 @@ public class ShoppingCardManager implements ShoppingCartService {
 	@Override
 	public List<GetAllShoppingCardResponse> getAll() {
 		
-		List<ShoppingCard> shoppingCarts = shoppingCardRepository.findAll();
-		List<GetAllShoppingCardResponse> ShoppingCardResponse = new ArrayList<GetAllShoppingCardResponse>();
-
-		for (ShoppingCard shoppingCart : shoppingCarts) {
-			GetAllShoppingCardResponse shoppingCardItem = new GetAllShoppingCardResponse();
-			shoppingCardItem.setId(shoppingCart.getId());
-			shoppingCardItem.setUser_id(shoppingCart.getUser_id());
-			shoppingCardItem.setProduct_id(shoppingCart.getProduct_id());
-			shoppingCardItem.setProduct_count(shoppingCart.getProduct_count());
-			
-			ShoppingCardResponse.add(shoppingCardItem);
 		
+		/*
+		 * List<GetAllShoppingCardResponse> shoppingCarts =
+		 * shoppingCardRepository.getAllShoppingCardsWithTotalPrice();
+		 * List<GetAllShoppingCardResponse> ShoppingCardResponse = new
+		 * ArrayList<GetAllShoppingCardResponse>();
+		 * 
+		 * for (GetAllShoppingCardResponse shoppingCart : shoppingCarts) {
+		 * GetAllShoppingCardResponse shoppingCardItem = new
+		 * GetAllShoppingCardResponse(); shoppingCardItem.setId(shoppingCart.getId());
+		 * shoppingCardItem.setUser_id(shoppingCart.getUser_id());
+		 * shoppingCardItem.setProduct_id(shoppingCart.getProduct_id());
+		 * shoppingCardItem.setProduct_count(shoppingCart.getProduct_count());
+		 * shoppingCardItem.setTotal_price(shoppingCart.getTotal_price());
+		 * 
+		 * ShoppingCardResponse.add(shoppingCardItem); }
+		 */
+		 
 		
-		}
-		
-		return ShoppingCardResponse;
+		return shoppingCardRepository.getAllShoppingCardsWithTotalPrice();
 	}
 
 	@Override

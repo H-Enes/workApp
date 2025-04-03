@@ -12,4 +12,5 @@ public class GetAllShoppingCardResponse {
 	private int user_id;
 	private int product_id;
 	private int product_count;
+	private double total_price;
 }

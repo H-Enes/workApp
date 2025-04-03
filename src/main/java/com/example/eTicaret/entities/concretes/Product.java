@@ -27,6 +27,8 @@ public class Product {
 	//@Column(name = "stock_quantity")
 	private int stock_quantity;
 	
+	private double price; 
+	
 	
 
 	

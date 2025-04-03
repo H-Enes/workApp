@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.eTicaret.business.abstracts.ProductService;
@@ -31,11 +33,17 @@ public class ProductsController {
 	public void add(CreateProductRequest createProductRequest) {
 		this.productService.add(createProductRequest);
 	}	
-		@DeleteMapping("/{id}")
-	    public String deleteProduct(@PathVariable int id) {
-	        productService.deleteProduct(id);
-	        return "Ürün başarıyla silindi!";
-	    }
+	
+	@DeleteMapping("/{id}")
+	   public String deleteProduct(@PathVariable int id) {
+	   productService.deleteProduct(id);
+	   return "Ürün başarıyla silindi!";
+	}
+	@PutMapping("/{id}/update-price")
+	public String updateProductPrice(@PathVariable int id, @RequestParam double price) {
+		productService.updatePrice(id, price);
+		return "Ürün fiyatı güncelleme başarılı";
+	}
 		
 	
 
