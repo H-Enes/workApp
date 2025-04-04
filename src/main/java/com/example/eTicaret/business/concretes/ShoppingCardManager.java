@@ -1,6 +1,5 @@
 package com.example.eTicaret.business.concretes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,27 +24,7 @@ public class ShoppingCardManager implements ShoppingCartService {
 	}
 	
 	@Override
-	public List<GetAllShoppingCardResponse> getAll() {
-		
-		
-		/*
-		 * List<GetAllShoppingCardResponse> shoppingCarts =
-		 * shoppingCardRepository.getAllShoppingCardsWithTotalPrice();
-		 * List<GetAllShoppingCardResponse> ShoppingCardResponse = new
-		 * ArrayList<GetAllShoppingCardResponse>();
-		 * 
-		 * for (GetAllShoppingCardResponse shoppingCart : shoppingCarts) {
-		 * GetAllShoppingCardResponse shoppingCardItem = new
-		 * GetAllShoppingCardResponse(); shoppingCardItem.setId(shoppingCart.getId());
-		 * shoppingCardItem.setUser_id(shoppingCart.getUser_id());
-		 * shoppingCardItem.setProduct_id(shoppingCart.getProduct_id());
-		 * shoppingCardItem.setProduct_count(shoppingCart.getProduct_count());
-		 * shoppingCardItem.setTotal_price(shoppingCart.getTotal_price());
-		 * 
-		 * ShoppingCardResponse.add(shoppingCardItem); }
-		 */
-		 
-		
+	public List<GetAllShoppingCardResponse> getAll() {	
 		return shoppingCardRepository.getAllShoppingCardsWithTotalPrice();
 	}
 

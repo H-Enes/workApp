@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.eTicaret.business.abstracts.ProductService;
 import com.example.eTicaret.business.requests.CreateProductRequest;
+import com.example.eTicaret.business.requests.UpdateProductRequest;
 import com.example.eTicaret.business.response.GetAllProductResponse;
 
 @RestController
@@ -44,7 +46,12 @@ public class ProductsController {
 		productService.updatePrice(id, price);
 		return "Ürün fiyatı güncelleme başarılı";
 	}
-		
+	
+	@PutMapping("{id}/update")
+	public String updateProduct(@PathVariable int id, @RequestBody UpdateProductRequest product) {
+		productService.updateProduct(id, product);
+		return "Ürün başarıyla güncellendi";
+	}
 	
 
 }
