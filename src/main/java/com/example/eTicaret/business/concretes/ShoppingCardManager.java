@@ -2,7 +2,6 @@ package com.example.eTicaret.business.concretes;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.eTicaret.business.abstracts.ShoppingCartService;
@@ -11,17 +10,24 @@ import com.example.eTicaret.business.response.GetAllShoppingCardResponse;
 import com.example.eTicaret.dataAccess.abstracts.ShoppingCardRepository;
 import com.example.eTicaret.entities.concretes.ShoppingCard;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class ShoppingCardManager implements ShoppingCartService {
 
-	private ShoppingCardRepository shoppingCardRepository;
-	private ProductManager productManager;
+	private final ShoppingCardRepository shoppingCardRepository;
+	private final ProductManager productManager;
 	
-	@Autowired
-	public ShoppingCardManager(ShoppingCardRepository shoppingCardRepository, ProductManager productManager) {
-		this.shoppingCardRepository = shoppingCardRepository;
-		this.productManager = productManager; 
-	}
+	
+	/*
+	 * @Autowired public ShoppingCardManager(ShoppingCardRepository
+	 * shoppingCardRepository, ProductManager productManager) {
+	 * this.shoppingCardRepository = shoppingCardRepository; this.productManager =
+	 * productManager; }
+	 */
+	 
 	
 	@Override
 	public List<GetAllShoppingCardResponse> getAll() {	
@@ -43,6 +49,7 @@ public class ShoppingCardManager implements ShoppingCartService {
 		
 	}
 	
+	@Transactional    // veri tabanında ilk işlemde hata olursa diğer işlemler yapılmaz veya geri alının-r. tutarsızlık önlenir
 	@Override
 	public void deleteShoppingCart(int shoppingCartId) {
 	    if (shoppingCardRepository.existsById(shoppingCartId)) {
