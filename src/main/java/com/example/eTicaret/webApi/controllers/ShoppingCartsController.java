@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.eTicaret.business.abstracts.ShoppingCartService;
+import com.example.eTicaret.business.concretes.ShoppingCardManager;
 import com.example.eTicaret.business.requests.CreateShoppingCardRequest;
 import com.example.eTicaret.business.response.GetAllShoppingCardResponse;
 
@@ -19,10 +19,10 @@ import com.example.eTicaret.business.response.GetAllShoppingCardResponse;
 @RequestMapping("/api/products/shoppingCard")
 public class ShoppingCartsController {
 
-	private ShoppingCartService shoppingCartService;
+	private ShoppingCardManager shoppingCartService;
 	
 	@Autowired
-	public ShoppingCartsController(ShoppingCartService shoppingCartService) {
+	public ShoppingCartsController(ShoppingCardManager shoppingCartService) {
 		this.shoppingCartService=shoppingCartService;
 	}
 	

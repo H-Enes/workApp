@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.example.eTicaret.business.abstracts.ShoppingCartService;
+
 import com.example.eTicaret.business.requests.CreateShoppingCardRequest;
 import com.example.eTicaret.business.response.GetAllShoppingCardResponse;
 import com.example.eTicaret.dataAccess.abstracts.ShoppingCardRepository;
-import com.example.eTicaret.entities.concretes.ShoppingCard;
+import com.example.eTicaret.entities.ShoppingCard;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ShoppingCardManager implements ShoppingCartService {
+public class ShoppingCardManager  {
 
 	private final ShoppingCardRepository shoppingCardRepository;
 	private final ProductManager productManager;
@@ -29,12 +29,10 @@ public class ShoppingCardManager implements ShoppingCartService {
 	 */
 	 
 	
-	@Override
 	public List<GetAllShoppingCardResponse> getAll() {	
 		return shoppingCardRepository.getAllShoppingCardsWithTotalPrice();
 	}
 
-	@Override
 	public void add(CreateShoppingCardRequest createShoppingCardRequest) {
 		ShoppingCard shoppingCard = new ShoppingCard();
 		
@@ -50,7 +48,6 @@ public class ShoppingCardManager implements ShoppingCartService {
 	}
 	
 	@Transactional    // veri tabanında ilk işlemde hata olursa diğer işlemler yapılmaz veya geri alının-r. tutarsızlık önlenir
-	@Override
 	public void deleteShoppingCart(int shoppingCartId) {
 	    if (shoppingCardRepository.existsById(shoppingCartId)) {
 	        // Önce sepetten ilgili ürünü bul

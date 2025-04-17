@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.example.eTicaret.business.response.GetAllShoppingCardResponse;
-import com.example.eTicaret.entities.concretes.ShoppingCard;
+import com.example.eTicaret.entities.ShoppingCard;
 
 public interface ShoppingCardRepository extends JpaRepository<ShoppingCard, Integer> {	
 	@Query("SELECT new com.example.eTicaret.business.response.GetAllShoppingCardResponse("

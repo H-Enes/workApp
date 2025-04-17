@@ -4,14 +4,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.example.eTicaret.business.abstracts.EmailService;
-import com.example.eTicaret.entities.concretes.Product;
+import com.example.eTicaret.entities.Product;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class EmailManager implements EmailService {
+public class EmailManager {
 
 	private final JavaMailSender javaMailSender;
 	
@@ -19,7 +18,6 @@ public class EmailManager implements EmailService {
 	
 
 
-	@Override
 	public void sendEmail(String to, String subject, String body) {
 		try {
             MimeMessageHelper message = new MimeMessageHelper(javaMailSender.createMimeMessage());

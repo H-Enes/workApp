@@ -1,5 +1,7 @@
 package com.example.eTicaret.business.response;
 
+import java.util.Set;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,5 @@ public class GetAllProductResponse {
     private String name;
     private int stock_quantity;
     private double price;
+    private Set<String> categories;
 }

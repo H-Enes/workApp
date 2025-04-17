@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.eTicaret.business.abstracts.ProductService;
+
+import com.example.eTicaret.business.concretes.ProductManager;
 import com.example.eTicaret.business.requests.CreateProductRequest;
 import com.example.eTicaret.business.requests.UpdateProductRequest;
 import com.example.eTicaret.business.response.GetAllProductResponse;
@@ -21,10 +22,10 @@ import com.example.eTicaret.business.response.GetAllProductResponse;
 @RestController
 @RequestMapping("/api/products")
 public class ProductsController {
-	private ProductService productService;
+	private ProductManager productService;
 
 	//@Autowired kullanmaya gerek yok constructor ile dependency injection
-	public ProductsController(ProductService productService) {
+	public ProductsController(ProductManager productService) {
 		this.productService = productService;
 	}
 	

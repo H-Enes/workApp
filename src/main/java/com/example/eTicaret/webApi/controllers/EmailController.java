@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.eTicaret.business.abstracts.EmailService;
+
+import com.example.eTicaret.business.concretes.EmailManager;
 
 import lombok.RequiredArgsConstructor;
 
@@ -13,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/email")
 public class EmailController {
-	private final EmailService emailService;
+	private final EmailManager emailService;
 	
 	 @PostMapping("/send")
 	    public String sendEmail(@RequestParam String to, @RequestParam String subject, @RequestParam String body) {

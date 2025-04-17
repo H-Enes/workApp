@@ -1,6 +1,5 @@
-package com.example.eTicaret.entities.concretes;
+package com.example.eTicaret.entities;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,16 +18,12 @@ import lombok.NoArgsConstructor;
 public class ShoppingCard {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	private int id;
 	
-	@Column(name="user_id")
 	private int user_id;
 	
-	@Column(name = "product_id")
 	private int product_id;
 	
-	@Column(name = "product_count")
 	private int product_count;
 	
 	

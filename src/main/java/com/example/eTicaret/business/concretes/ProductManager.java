@@ -1,28 +1,28 @@
 package com.example.eTicaret.business.concretes;
 import java.util.List;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.example.eTicaret.business.abstracts.EmailService;
-import com.example.eTicaret.business.abstracts.ProductService;
+
 import com.example.eTicaret.business.converters.ProductConverter;
 import com.example.eTicaret.business.requests.CreateProductRequest;
 import com.example.eTicaret.business.requests.UpdateProductRequest;
 import com.example.eTicaret.business.response.GetAllProductResponse;
 import com.example.eTicaret.dataAccess.abstracts.ProductRepository;
-import com.example.eTicaret.entities.concretes.Product;
+import com.example.eTicaret.entities.Product;
 
 import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
-public class ProductManager implements ProductService {
+public class ProductManager {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductManager.class);
     private final ProductRepository productRepository;
-    private final EmailService emailService;  // Admin'e bildirim gönderecek servis
+    private final EmailManager emailService;  // Admin'e bildirim gönderecek servis
     
     //requiredArgsConstructor ile otomatik dependency injection
 	/*
@@ -30,13 +30,11 @@ public class ProductManager implements ProductService {
 	 * this.productRepository = productRepository; }
 	 */
 
-    @Override
     public List<GetAllProductResponse> getAll() {
     	List<Product> products = productRepository.findAll();
         return ProductConverter.convertToResponseList(products);
     }
 
-	@Override
 	public void add(CreateProductRequest createProductRequest) {
 		Product product = new Product();
 		product.setName(createProductRequest.getName());
@@ -74,7 +72,6 @@ public class ProductManager implements ProductService {
         }
     }
 
-	@Override
 	public void updatePrice(int id, double price) {
 		Product product = productRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
@@ -82,7 +79,6 @@ public class ProductManager implements ProductService {
 		productRepository.save(product);	
 	}
 
-	@Override
 	public void updateProduct(int id, UpdateProductRequest product) {
 	    Product toUpdateProduct = productRepository.findById(id)
 	            .orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
