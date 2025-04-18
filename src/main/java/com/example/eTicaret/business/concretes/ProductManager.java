@@ -14,6 +14,8 @@ import com.example.eTicaret.business.requests.UpdateProductRequest;
 import com.example.eTicaret.business.response.GetAllProductResponse;
 import com.example.eTicaret.dataAccess.abstracts.ProductRepository;
 import com.example.eTicaret.entities.Product;
+import com.example.eTicaret.exeptions.ProductNotFoundException;
+import com.example.eTicaret.exeptions.StockNotEnoughException;
 
 import lombok.RequiredArgsConstructor;
 @Service
@@ -46,19 +48,19 @@ public class ProductManager {
 	public void decreaseStock(int productId, int count) {
 		System.out.println("Stok azaltma işlemi başlıyor, Product ID: " + productId);
 	    Product product = productRepository.findById(productId)
-	            .orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
-	    if (product.getStock_quantity() > 0) {
+	            .orElseThrow(() -> new ProductNotFoundException("Ürün bulunamadı"));
+	    if (product.getStock_quantity() >= count) {
 	        product.setStock_quantity(product.getStock_quantity() - count);
 	        this.productRepository.save(product);
 	    } else {
-	        throw new RuntimeException("Stok yetersiz!");
+	        throw new StockNotEnoughException("Yeterli stok yok. Mevcut: " + product.getStock_quantity());
 	    }
 	}
 	
 	public void increasingStock(int productId, int count) {
 		System.out.println("Stok artırma işlemi başlıyor, Product ID: " + productId);
 	    Product product = productRepository.findById(productId)
-	            .orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
+	            .orElseThrow(() -> new ProductNotFoundException("Ürün bulunamadı"));
 
 	        product.setStock_quantity(product.getStock_quantity() + count);
 	        this.productRepository.save(product);    
@@ -68,20 +70,20 @@ public class ProductManager {
         if (productRepository.existsById(productId)) {
             productRepository.deleteById(productId);
         } else {
-            throw new RuntimeException("Ürün bulunamadı!");
+            throw new ProductNotFoundException("Ürün bulunamadı!");
         }
     }
 
 	public void updatePrice(int id, double price) {
 		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
+				.orElseThrow(() -> new ProductNotFoundException("Ürün bulunamadı"));
 		product.setPrice(price);
 		productRepository.save(product);	
 	}
 
 	public void updateProduct(int id, UpdateProductRequest product) {
 	    Product toUpdateProduct = productRepository.findById(id)
-	            .orElseThrow(() -> new RuntimeException("Ürün bulunamadı"));
+	            .orElseThrow(() -> new ProductNotFoundException("Ürün bulunamadı"));
 
 	    StringBuilder logMessage = new StringBuilder("Ürün ID: " + id + " güncelleme işlemi: ");
 	    boolean updated = false;
@@ -118,6 +120,7 @@ public class ProductManager {
 	        logger.info(logMessage.toString());
 	    } else {
 	        logger.warn("Ürün ID: {} için güncelleme isteği geldi fakat hiçbir alan değiştirilmedi.", id);
+	        
 	    }
 	}
 	

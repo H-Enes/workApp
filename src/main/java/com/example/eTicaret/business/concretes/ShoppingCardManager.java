@@ -9,6 +9,7 @@ import com.example.eTicaret.business.requests.CreateShoppingCardRequest;
 import com.example.eTicaret.business.response.GetAllShoppingCardResponse;
 import com.example.eTicaret.dataAccess.abstracts.ShoppingCardRepository;
 import com.example.eTicaret.entities.ShoppingCard;
+import com.example.eTicaret.exeptions.ProductNotFoundException;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -47,25 +48,19 @@ public class ShoppingCardManager  {
 		
 	}
 	
-	@Transactional    // veri tabanında ilk işlemde hata olursa diğer işlemler yapılmaz veya geri alının-r. tutarsızlık önlenir
+	@Transactional
 	public void deleteShoppingCart(int shoppingCartId) {
-	    if (shoppingCardRepository.existsById(shoppingCartId)) {
-	        // Önce sepetten ilgili ürünü bul
-	        ShoppingCard shoppingCard = shoppingCardRepository.findById(shoppingCartId)
-	                .orElseThrow(() -> new RuntimeException("Sepette ürün bulunamadı!"));
+	    ShoppingCard shoppingCard = shoppingCardRepository.findById(shoppingCartId)
+	            .orElseThrow(() -> new ProductNotFoundException("Sepette ürün bulunamadı!"));
 
-	        int productId = shoppingCard.getProduct_id();
-	        int count = shoppingCard.getProduct_count();
+	    int productId = shoppingCard.getProduct_id();
+	    int count = shoppingCard.getProduct_count();
 
-	        // Sepetten ürünü sil
-	        shoppingCardRepository.deleteById(shoppingCartId);
+	    shoppingCardRepository.deleteById(shoppingCartId);
 
-	        // Stok artırma işlemi
-	        productManager.increasingStock(productId, count);
-	    } else {
-	        throw new RuntimeException("Sepette ürün bulunamadı!");
-	    }
+	    productManager.increasingStock(productId, count);
 	}
+
 
 
 
