@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,10 @@ import com.example.eTicaret.business.requests.CreateProductRequest;
 import com.example.eTicaret.business.requests.UpdateProductRequest;
 import com.example.eTicaret.business.response.GetAllProductResponse;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+
+@Validated
 @RestController
 @RequestMapping("/api/products")
 public class ProductsController {
@@ -37,28 +42,34 @@ public class ProductsController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<String> add(@RequestBody CreateProductRequest createProductRequest) {
+	public ResponseEntity<String> add(@Valid @RequestBody CreateProductRequest createProductRequest) {
 		productService.add(createProductRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).body("Ürün başarıyla eklendi");
 	}	
 	
 	@DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable int id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable @Min(value = 1, message = "ID 1'den küçük olamaz") int id) {
         productService.deleteProduct(id);
         return ResponseEntity.ok("Ürün başarıyla silindi!");
     }
 	
 	@PutMapping("/{id}/update-price")
-    public ResponseEntity<String> updateProductPrice(@PathVariable int id, @RequestParam double price) {
+    public ResponseEntity<String> updateProductPrice(@PathVariable @Min(value = 1, message = "ID 1'den küçük olamaz") int id,
+    		@Min(value = 1, message = "Fiyat 0'dan küçük olamaz") @RequestParam double price) {
         productService.updatePrice(id, price);
         return ResponseEntity.ok("Ürün fiyatı güncelleme başarılı");
     }
 	
 	@PutMapping("{id}/update")
-    public ResponseEntity<String> updateProduct(@PathVariable int id, @RequestBody UpdateProductRequest product) {
+    public ResponseEntity<String> updateProduct(@PathVariable @Min(value = 1, message = "ID 1'den küçük olamaz") int id,
+    		@Valid @RequestBody UpdateProductRequest product) {
         productService.updateProduct(id, product);
         return ResponseEntity.ok("Ürün başarıyla güncellendi");
     }
 	
+	@GetMapping("/byCategory/{categoryId}")
+	public List<GetAllProductResponse> getProductsByCategory(@PathVariable @Min(value = 1, message = "ID 1'den küçük olamaz") int categoryId) {
+	    return productService.getProductsByCategoryId(categoryId);
+	}
 
 }

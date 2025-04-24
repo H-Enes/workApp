@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,10 @@ import com.example.eTicaret.business.concretes.ShoppingCardManager;
 import com.example.eTicaret.business.requests.CreateShoppingCardRequest;
 import com.example.eTicaret.business.response.GetAllShoppingCardResponse;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+
+@Validated
 @RestController
 @RequestMapping("/api/products/shoppingCard")
 public class ShoppingCartsController {
@@ -35,13 +40,13 @@ public class ShoppingCartsController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<String> add(@RequestBody CreateShoppingCardRequest createShoppingCartRequest) {
+	public ResponseEntity<String> add(@Valid @RequestBody CreateShoppingCardRequest createShoppingCartRequest) {
 		this.shoppingCartService.add(createShoppingCartRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).body("Sepete ürün eklendi");
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> removeItemFromCart(@PathVariable int id) {
+	public ResponseEntity<String> removeItemFromCart(@PathVariable @Min(value = 1, message = "ID 1'den küçük olamaz") int id) {
 		shoppingCartService.deleteShoppingCart(id);
 		return ResponseEntity.ok("Sepetten ürün başarıyla silindi!");
 	}
